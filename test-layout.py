@@ -59,6 +59,7 @@ def build_window():
 
     bg = gtk.gdk.pixbuf_new_from_file(join(talk.SHARED_DATA_DIR, 'background.jpg'))
     layout = TalkLayout(collection, bg)
+    stage.set_key_focus(layout)
 
     stage.add(layout)
     layout.set_position(0, 0)
