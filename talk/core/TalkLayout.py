@@ -37,6 +37,8 @@ class TalkLayout (clutter.Group):
         @type   background: gtk.gdk.Pixbuf
         """
         clutter.Group.__init__ (self)
+        self.set_reactive(True)
+        self.connect('key-press-event', self.on_key_press)
 
         self.collection = collection
 
@@ -55,17 +57,83 @@ class TalkLayout (clutter.Group):
         else:
             self._texture = None
 
-        count = 1
+        count = 0
         for slide in self.collection:
-            factor = float(count) / float(len(self.collection))
-
-            count = count + 1
+            factor = float(count + 1) / float(len(self.collection))
 
             slide.set_opacity(int(255 - (255 * factor)))
 
             self.add(slide)
             slide.set_position(0, 0)
-            slide.set_depth(count * -200)
+            slide.set_depth((count + 1) * -200)
 
             slide.show()
 
+            count = count + 1
+
+
+        self.current_index = 0
+
+        timeline = clutter.Timeline(duration=1000)
+        self._template = clutter.EffectTemplate(timeline, clutter.sine_inc_func)
+
+    def on_depth_complete (self, group, direction):
+        pass
+
+    def on_key_press (self, group, event):
+        if not self.collection:
+            return False
+
+        current = self.current_index
+        try:
+            slide = self.collection[current]
+        except Exception, ex:
+            slide = None
+
+        if event.keyval == clutter.keysyms.k:
+            next = current + 1
+            direction = 'forward'
+        elif event.keyval == clutter.keysyms.j:
+            next = current - 1
+            direction = 'backward'
+        else:
+            return False
+
+        if next < 0 or next > len(self.collection):
+            return False
+
+        depth = next * -200
+
+        try:
+            next_slide = self.collection[next]
+        except Exception, ex:
+            next_slide = None
+
+        # we start with the title slide at a non-zero depth, so
+        # we need to special-case it
+        if current == 0:
+            clutter.effect_fade(self._template, slide, 255)
+        elif next == 0:
+            opacity = float(next + 1) / float(len(self.collection))
+            opacity = int(255 - (255 * opacity))
+            clutter.effect_fade(self._template, next_slide, opacity)
+        else:
+            prev_slide = self.collection[current - 1]
+
+            if direction == 'forward':
+                clutter.effect_fade(self._template, prev_slide, 0)
+                if slide:
+                    clutter.effect_fade(self._template, slide, 255)
+            else:
+                opacity = float(current) / float(len(self.collection))
+                opacity = int(255 - (255 * opacity))
+                clutter.effect_fade(self._template, prev_slide, opacity)
+                if next_slide:
+                    clutter.effect_fade(self._template, next_slide, 255)
+
+        # move the group to the next slide's depth
+        clutter.effect_depth(self._template, self, -depth,
+                             self.on_depth_complete,
+                             direction)
+
+        self.current_index = next
