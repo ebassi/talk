@@ -29,7 +29,7 @@ class BulletSlide (TalkSlide):
         self.title = title
         if self.title:
             self._title_label = clutter.Label()
-            self._title_label.set_font_name('Sans 32px')
+            self._title_label.set_font_name('Sans 36px')
             self._title_label.set_use_markup(True)
             self._title_label.set_text(self.title)
             self._title_label.set_width(600)
