@@ -12,6 +12,7 @@ class TalkSlide (clutter.Group):
 
     WIDTH = 800
     HEIGHT = 600
+    PADDING = 5
 
     def __init__ (self, header=None, footer=None, bg_color=None, text_color=None):
         """
@@ -29,28 +30,32 @@ class TalkSlide (clutter.Group):
         self.connect('show', self.on_show)
         self.connect('hide', self.on_hide)
 
-        if not header:
-            header = 'Unnamed talk'
+        self._header = header
+        if not self._header:
+            self._header = 'Unnamed talk'
 
-        if not footer:
-            footer = 'No author, no date'
+        self._footer = footer
+        if not self._footer:
+            self._footer = 'No author, no date'
 
-        if not bg_color:
-            bg_color = clutter.Color(0, 0, 0, 255)
+        self._bg_color = bg_color
+        if not self._bg_color:
+            self._bg_color = clutter.Color(0, 0, 0, 255)
 
-        if not text_color:
-            text_color = clutter.Color(255, 255, 255, 255)
+        self._text_color = text_color
+        if not self._text_color:
+            self._text_color = clutter.Color(255, 255, 255, 255)
 
-        self._bg_rect = clutter.Rectangle(color=bg_color)
+        self._bg_rect = clutter.Rectangle(color=self._bg_color)
         self._bg_rect.set_size(TalkSlide.WIDTH, TalkSlide.HEIGHT)
         self._bg_rect.set_border_width(2)
-        self._bg_rect.set_border_color(bg_color.lighten())
+        self._bg_rect.set_border_color(self._bg_color.lighten())
         self.add(self._bg_rect)
         self._bg_rect.show()
 
         self._header_label = clutter.Label()
-        self._header_label.set_color(text_color)
-        self._header_label.set_text(header)
+        self._header_label.set_color(self._text_color)
+        self._header_label.set_text(self._header)
         self._header_label.set_font_name('Sans 16px')
         self.add(self._header_label)
         self._header_label.set_width(TalkSlide.WIDTH)
@@ -59,8 +64,8 @@ class TalkSlide (clutter.Group):
         self._header_label.show()
 
         self._footer_label = clutter.Label()
-        self._footer_label.set_color(text_color)
-        self._footer_label.set_text(footer)
+        self._footer_label.set_color(self._text_color)
+        self._footer_label.set_text(self._footer)
         self._footer_label.set_font_name('Sans 12px')
         self.add(self._footer_label)
         self._footer_label.set_position(0, TalkSlide.HEIGHT - self._footer_label.get_height() - 5)
@@ -81,4 +86,12 @@ class TalkSlide (clutter.Group):
         clutter.effect_fade(self._template, self._footer_label, 0)
 
     def get_header_width (self):
-        return self._header_label.get_height() + 5
+        return self._header_label.get_height() + TalkSlide.PADDING
+
+    def get_text_color (self):
+        return self._text_color
+
+    def get_bg_color (self):
+        return self._bg_color
+
+gobject.type_register(TalkSlide)
