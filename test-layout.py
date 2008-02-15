@@ -13,6 +13,7 @@ def check_talk_path():
 check_talk_path()
 import talk
 
+from talk.core.TextSlide import TextSlide
 from talk.core.TitleSlide import TitleSlide
 from talk.core.BulletSlide import BulletSlide
 from talk.core.SlideCollection import SlideCollection
@@ -56,6 +57,39 @@ def build_window():
     items.append('sixth point')
     slide = BulletSlide(bullets=items, header='test talk')
     collection.append_slide(slide)
+
+    script = clutter.Script()
+    slide_script = '''
+{
+  "type" : "TextSlide", "id" : "fifth-slide",
+  "title" : "A script-based slide",
+  "text" : "This slide is parsed straight from a ClutterScript"
+}
+'''
+    script.load_from_data(slide_script, -1)
+    slide = script.get_object('fifth-slide')
+    if slide:
+        collection.append_slide(slide)
+
+    slide_script = '''
+{
+  "type" : "TextSlide", "id" : "sixth-slide",
+  "title" : "Another script-based slide",
+  "children" : [
+    { "id" : "image", "type" : "ClutterTexture",
+      "pixbuf" : "data/background.jpg",
+      "width" : 400,
+      "height" : 300,
+      "x" : 200, "y" : 150,
+      "visible" : true
+    }
+  ]
+}
+'''
+    script.load_from_data(slide_script, -1)
+    slide = script.get_object('sixth-slide')
+    if slide:
+        collection.append_slide(slide)
 
     bg = gtk.gdk.pixbuf_new_from_file(join(talk.SHARED_DATA_DIR, 'background.jpg'))
     layout = TalkLayout(collection, bg)
