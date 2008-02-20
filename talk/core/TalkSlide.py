@@ -9,12 +9,19 @@ class TalkSlide (clutter.Group):
     Creates a slide with a header and a footer, fading in/out on show/hide.
     """
     __gtype_name__ = 'TalkSlide'
+    __gproperties__ = {
+        'header' : (str, 'header', 'header', '', gobject.PARAM_READWRITE),
+        'footer' : (str, 'footer', 'footer', '', gobject.PARAM_READWRITE),
+    }
+    __gsignals__ = {
+        'slide-visible' : (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, ())
+    }
 
     WIDTH = 800
     HEIGHT = 600
     PADDING = 5
 
-    def __init__ (self, header=None, footer=None, bg_color=None, text_color=None):
+    def __init__ (self, header='', footer='', bg_color=None, text_color=None):
         """
         @param      header: header text
         @type       header: str
@@ -32,11 +39,11 @@ class TalkSlide (clutter.Group):
 
         self._header = header
         if not self._header:
-            self._header = 'Unnamed talk'
+            self._header = ''
 
         self._footer = footer
         if not self._footer:
-            self._footer = 'No author, no date'
+            self._footer = ''
 
         self._bg_color = bg_color
         if not self._bg_color:
@@ -93,5 +100,26 @@ class TalkSlide (clutter.Group):
 
     def get_bg_color (self):
         return self._bg_color
+
+    def do_slide_visible (self):
+        pass
+
+    def do_set_property (self, pspec, value):
+        if pspec.name == 'header':
+            self._header = value
+            self._header_label.set_text(self._header)
+        elif pspec.name == 'footer':
+            self._footer = value
+            self._footer_label.set_text(self._footer)
+        else:
+            raise TypeError('Unknown property ' + pspec.name)
+
+    def do_get_property (self, pspec):
+        if pspec.name == 'header':
+            return self._header
+        elif pspec.name == 'footer':
+            return self._footer
+        else:
+            raise TypeError('Unknown property ' + pspec.name)
 
 gobject.type_register(TalkSlide)
