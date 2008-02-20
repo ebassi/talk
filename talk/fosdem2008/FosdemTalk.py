@@ -138,33 +138,60 @@ class FosdemTalk:
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'bindings/1')
 
-        slide = TextSlide(font='Sans 64px', text='Python')
+        slide_script = '''
+{
+  "type" : "TextSlide",
+  "id" : "pony-slide",
+  "text" : "",
+
+  "children" : [
+    {
+      "type" : "ClutterTexture",
+      "id" : "orly",
+      "pixbuf" : "data/pony.jpg",
+      "x" : 145,
+      "y" : 100,
+      "visible" : true
+    },
+  ]
+}
+'''
+        self._script.load_from_data(slide_script, -1)
+        slide = self._script.get_object('pony-slide')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'pony')
+
+        slide = TextSlide(font='Sans 64px', text=u'Just kidding \u263b')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'bindings/2')
 
-        slide = TextSlide(font='Sans 64px', text='Perl')
+        slide = TextSlide(font='Sans 64px', text='Python')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'bindings/3')
 
-        slide = TextSlide(font='Sans 64px', text='C++')
+        slide = TextSlide(font='Sans 64px', text='Perl')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'bindings/4')
 
-        slide = TextSlide(font='Sans 64px', text='C#')
+        slide = TextSlide(font='Sans 64px', text='C++')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'bindings/5')
 
-        slide = TextSlide(font='Sans 64px', text='Vala')
+        slide = TextSlide(font='Sans 64px', text='C#')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'bindings/6')
 
-        slide = TextSlide(font='Sans 64px', text='Ruby')
+        slide = TextSlide(font='Sans 64px', text='Vala')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'bindings/7')
 
-        slide = TextSlide(font='Sans 42px', text='${INSERT_YOUR_LANGUAGE_HERE}')
+        slide = TextSlide(font='Sans 64px', text='Ruby')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'bindings/8')
+
+        slide = TextSlide(font='Sans 42px', text='${INSERT_YOUR_LANGUAGE_HERE}')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'bindings/9')
 
         slide = TextSlide(font='Sans 48px', text='Clutter 0.6 is out')
         self._collection.append_slide(slide)
