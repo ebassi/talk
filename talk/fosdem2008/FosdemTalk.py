@@ -23,7 +23,9 @@ class FosdemTalk:
         self._collection = SlideCollection()
         self._model = gtk.ListStore(gobject.TYPE_STRING)
 
-        slide = TitleSlide(title=FosdemTalk.TITLE, subtitle=FosdemTalk.SUBTITLE)
+        slide = TitleSlide(title=FosdemTalk.TITLE,
+                           subtitle=FosdemTalk.SUBTITLE,
+                           footer=FosdemTalk.FOOTER)
         self._collection.set_title_slide(slide)
         self._model.set(self._model.append(), 0, 'Title')
 
@@ -225,7 +227,10 @@ class FosdemTalk:
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'q-n-a')
 
-        slide = TextSlide(font='Sans 48px', text='Thank you for listening')
+        slide = TextSlide(font='Sans 48px',
+                          text='Thank you for listening',
+                          header=FosdemTalk.HEADER,
+                          footer=FosdemTalk.FOOTER)
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'the end')
 
