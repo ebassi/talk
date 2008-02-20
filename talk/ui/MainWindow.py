@@ -26,6 +26,7 @@ class MainWindow (gtk.Window):
 
     def __init__ (self):
         gtk.Window.__init__ (self)
+        self.set_title('Talk')
         self.set_default_size(1024, 600)
         self.set_position(gtk.WIN_POS_CENTER)
         self.tree = gtk.glade.XML(join(talk.SHARED_DATA_DIR, 'talk.glade'), root='main_vbox')
