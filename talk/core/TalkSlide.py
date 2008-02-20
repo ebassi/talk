@@ -85,8 +85,7 @@ class TalkSlide (clutter.Group):
         self._template = clutter.EffectTemplate(self._timeline, clutter.sine_inc_func)
 
     def on_show (self, group):
-        clutter.effect_fade(self._template, self._header_label, 255)
-        clutter.effect_fade(self._template, self._footer_label, 255)
+        pass
 
     def on_hide (self, group):
         clutter.effect_fade(self._template, self._header_label, 0)
@@ -102,7 +101,8 @@ class TalkSlide (clutter.Group):
         return self._bg_color
 
     def do_slide_visible (self):
-        pass
+        clutter.effect_fade(self._template, self._header_label, 255)
+        clutter.effect_fade(self._template, self._footer_label, 255)
 
     def do_set_property (self, pspec, value):
         if pspec.name == 'header':
