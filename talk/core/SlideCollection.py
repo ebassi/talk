@@ -10,8 +10,12 @@ class SlideCollection:
     Iterable container. The title slide can only be one, and of
     TitleSlide type.
     """
-    def __init__ (self):
-        self.slides = []
+    def __init__ (self, slides=None):
+        if not slides:
+            self.slides = []
+        else:
+            self.slides = slides
+
         self.cur_slide = 0
 
     def set_title_slide (self, slide):
