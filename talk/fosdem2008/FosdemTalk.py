@@ -114,7 +114,7 @@ class FosdemTalk:
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'features/5')
 
-        slide = TextSlide(font='Sans 56px', text='Clean API')
+        slide = TextSlide(font='Sans 56px', text='Clean and Nice API')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'in short/1')
 
@@ -126,13 +126,29 @@ class FosdemTalk:
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'in short/3')
 
-        slide = TextSlide(font='Sans 56px', text='=')
+        slide = TextSlide(font='Sans 56px', text='+')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'in short/4')
 
-        slide = TextSlide(font='Sans 128px', text=u'\u2665')
+        slide = TextSlide(font='Sans 56px', text='Portability')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'in short/5')
+
+        slide = TextSlide(font='Sans 56px', text='+')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'in short/6')
+
+        slide = TextSlide(font='Sans 56px', text='Integration')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'in short/7')
+
+        slide = TextSlide(font='Sans 56px', text='=')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'in short/8')
+
+        slide = TextSlide(font='Sans 128px', text=u'\u2665')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'in short/9')
 
         slide = TextSlide(font='Sans 42px', text='And if you don\'t like C...')
         self._collection.append_slide(slide)
