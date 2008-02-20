@@ -11,7 +11,7 @@ class TextSlide (TalkSlide):
         'text' : (str, 'text', 'text', '', gobject.PARAM_READWRITE),
     }
 
-    def __init__ (self, title=None, text=None, **kwargs):
+    def __init__ (self, title=None, text=None, font=None, **kwargs):
         header = None
         if kwargs.has_key('header'):
             header = kwargs['header']
@@ -30,10 +30,14 @@ class TextSlide (TalkSlide):
 
         TalkSlide.__init__(self, header, footer, bg_color, text_color)
 
+        self._font = font
+        if not self._font:
+            self._font = 'Sans 28px'
+
         self._title = title
         self._title_label = clutter.Label()
         self._title_label.set_color(self.get_text_color())
-        self._title_label.set_font_name('Sans 36px')
+        self._title_label.set_font_name(self._font)
         self._title_label.set_use_markup(True)
         if self._title:
             self._title_label.set_text(self._title)
@@ -48,7 +52,7 @@ class TextSlide (TalkSlide):
         self._text = text
         self._text_label = clutter.Label()
         self._text_label.set_color(self.get_text_color())
-        self._text_label.set_font_name('Sans 28px')
+        self._text_label.set_font_name(self._font)
         self._text_label.set_use_markup(True)
         if self._text:
             self._text_label.set_text(self._text)
