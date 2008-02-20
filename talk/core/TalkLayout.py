@@ -9,6 +9,10 @@ class TalkLayout (clutter.Group):
     TalkLayout is a group arranging the children, taken from
     a SlideCollection, on the Z axis, with decreasing opacity.
     """
+    __gsignals__ = {
+      'slide-next' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+      'slide-prev' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+    }
 
     INV_SCALE = 45
     SCALE = 1.0 / INV_SCALE
@@ -74,11 +78,14 @@ class TalkLayout (clutter.Group):
 
         self.current_index = 0
 
-        timeline = clutter.Timeline(duration=1000)
+        timeline = clutter.Timeline(duration=250)
         self._template = clutter.EffectTemplate(timeline, clutter.sine_inc_func)
 
     def on_depth_complete (self, group, direction):
-        pass
+        if (self.current_index - 1) < 0:
+            return
+
+        self.collection[self.current_index - 1].emit('slide-visible')
 
     def on_key_press (self, group, event):
         if not self.collection:
@@ -130,6 +137,11 @@ class TalkLayout (clutter.Group):
                 clutter.effect_fade(self._template, prev_slide, opacity)
                 if next_slide:
                     clutter.effect_fade(self._template, next_slide, 255)
+
+        if direction == 'forward':
+            self.emit('slide-next')
+        else:
+            self.emit('slide-prev')
 
         # move the group to the next slide's depth
         clutter.effect_depth(self._template, self, -depth,
