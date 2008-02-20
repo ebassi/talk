@@ -104,6 +104,10 @@ class FosdemTalk:
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'features/4')
 
+        slide = TextSlide(font='Sans 48px', text='Not just a canvas')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'features/5')
+
         items = [ \
           u'Floating point \u2194 Fixed point', \
           'Subpixel precision', \
@@ -112,7 +116,7 @@ class FosdemTalk:
         ]
         slide = BulletSlide(bullets=items)
         self._collection.append_slide(slide)
-        self._model.set(self._model.append(), 0, 'features/5')
+        self._model.set(self._model.append(), 0, 'features/6')
 
         slide = TextSlide(font='Sans 56px', text='Clean and Nice API')
         self._collection.append_slide(slide)
