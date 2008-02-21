@@ -42,7 +42,8 @@ class TitleSlide (TalkSlide):
         self.add(self._title_label)
         self._title_label.set_anchor_point(self._title_label.get_width() / 2,
                                            self._title_label.get_height() / 2)
-        self._title_label.set_position(self.get_width() / 2, self.get_height() / 2)
+        self._title_label.set_position(TalkSlide.WIDTH / 2,
+                                       TalkSlide.HEIGHT / 2)
         self._title_label.show()
 
         self._subtitle_label = clutter.Label()
@@ -52,8 +53,8 @@ class TitleSlide (TalkSlide):
         self.add(self._subtitle_label)
         self._subtitle_label.set_anchor_point(self._subtitle_label.get_width() / 2,
                                               self._subtitle_label.get_height() / 2)
-        self._subtitle_label.set_position(self.get_width() / 2,
-                                          self.get_height() / 2 
+        self._subtitle_label.set_position(TalkSlide.WIDTH / 2,
+                                          TalkSlide.HEIGHT / 2 
                                           + self._title_label.get_height()
                                           + 10)
         self._subtitle_label.show()
@@ -65,8 +66,8 @@ class TitleSlide (TalkSlide):
         self.add(self._author_label)
         self._author_label.set_anchor_point(self._author_label.get_width() / 2,
                                             self._author_label.get_height() / 2)
-        self._author_label.set_position(self.get_width() / 2,
-                                        self.get_height() / 2 
+        self._author_label.set_position(TalkSlide.WIDTH / 2,
+                                        TalkSlide.HEIGHT / 2 
                                         + self._title_label.get_height()
                                         + self._subtitle_label.get_height()
                                         + 10)

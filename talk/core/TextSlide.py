@@ -41,7 +41,7 @@ class TextSlide (TalkSlide):
         self._title_label.set_use_markup(True)
         if self._title:
             self._title_label.set_text(self._title)
-        self._title_label.set_width(600)
+        self._title_label.set_width(TalkSlide.WIDTH)
         self.add(self._title_label)
 
         x = 50
@@ -56,13 +56,13 @@ class TextSlide (TalkSlide):
         self._text_label.set_use_markup(True)
         if self._text:
             self._text_label.set_text(self._text)
-        self._text_label.set_width(600)
+        self._text_label.set_width(TalkSlide.WIDTH)
         self.add(self._text_label)
 
-        x = (800 - self._text_label.get_width()) / 2
-        y = (600 - self._text_label.get_height()) / 2
         self._text_label.set_alignment(pango.ALIGN_CENTER)
-        self._text_label.set_position(x, y)
+        self._text_label.set_anchor_point(self._text_label.get_width() / 2,
+                                          self._text_label.get_height() / 2)
+        self._text_label.set_position(TalkSlide.WIDTH / 2, TalkSlide.HEIGHT / 2)
         self._text_label.show()
 
     def do_set_property (self, pspec, value):

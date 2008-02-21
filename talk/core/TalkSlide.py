@@ -56,7 +56,7 @@ class TalkSlide (clutter.Group):
         self._bg_rect = clutter.Rectangle(color=self._bg_color)
         self._bg_rect.set_size(TalkSlide.WIDTH, TalkSlide.HEIGHT)
         self._bg_rect.set_border_width(2)
-        self._bg_rect.set_border_color(self._bg_color.lighten())
+        self._bg_rect.set_border_color(self._bg_color.shade(1.8))
         self.add(self._bg_rect)
         self._bg_rect.show()
 

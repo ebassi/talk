@@ -28,7 +28,7 @@ class MainWindow (gtk.Window):
         gtk.Window.__init__ (self)
         self.set_title('Talk')
         self.set_position(gtk.WIN_POS_CENTER)
-        self.set_default_size(1024, 600)
+        self.set_default_size(1024, TalkSlide.HEIGHT)
 
         self.tree = gtk.glade.XML(join(talk.SHARED_DATA_DIR, 'talk.glade'), root='main_vbox')
         signals = {}
@@ -39,7 +39,7 @@ class MainWindow (gtk.Window):
         view_box = self.tree.get_widget('view_box')
         self._embed = clutter.cluttergtk.Embed()
         self._embed.set_flags(gtk.CAN_FOCUS)
-        self._embed.set_size_request(800, 600)
+        self._embed.set_size_request(TalkSlide.WIDTH, TalkSlide.HEIGHT)
         view_box.pack_end(self._embed, False, False, 0)
         self._embed.show()
 

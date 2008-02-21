@@ -32,7 +32,7 @@ class BulletSlide (TalkSlide):
             self._title_label.set_font_name('Sans 36px')
             self._title_label.set_use_markup(True)
             self._title_label.set_text(self.title)
-            self._title_label.set_width(600)
+            self._title_label.set_width(TalkSlide.WIDTH)
             self.add(self._title_label)
 
             x = 50
@@ -53,7 +53,7 @@ class BulletSlide (TalkSlide):
             label.set_font_name('Sans 28px')
             label.set_use_markup(True)
             label.set_text(text)
-            label.set_width(600)
+            label.set_width(TalkSlide.WIDTH)
             self.add(label)
 
             x = 50

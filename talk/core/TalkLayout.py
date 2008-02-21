@@ -2,6 +2,8 @@ import gobject
 import gtk
 import clutter
 
+from talk.core.TalkSlide import TalkSlide
+
 class TalkLayout (clutter.Group):
     """
     Layout object for the presentation
@@ -16,6 +18,7 @@ class TalkLayout (clutter.Group):
 
     INV_SCALE = 45
     SCALE = 1.0 / INV_SCALE
+    STEP = -300
 
     def scale_to_depth (self, scale):
         """
@@ -54,8 +57,15 @@ class TalkLayout (clutter.Group):
             self._texture.set_opacity(0xaa)
             self.add(self._texture)
             self._texture.set_scale(TalkLayout.INV_SCALE, TalkLayout.INV_SCALE)
-            self._texture.set_position(-TalkLayout.INV_SCALE * 800 / 2 + 400,
-                                       -TalkLayout.INV_SCALE * 600 / 2 + 300)
+            x = TalkLayout.INV_SCALE \
+              * TalkSlide.WIDTH \
+              / 2 \
+              + (TalkSlide.WIDTH / 2)
+            y = TalkLayout.INV_SCALE \
+              * TalkSlide.HEIGHT \
+              / 2 \
+              + (TalkSlide.HEIGHT / 2)
+            self._texture.set_position(-x, -y)
             self._texture.set_depth(self.scale_to_depth (TalkLayout.SCALE))
             self._texture.show()
         else:
@@ -69,7 +79,7 @@ class TalkLayout (clutter.Group):
 
             self.add(slide)
             slide.set_position(0, 0)
-            slide.set_depth((count + 1) * -200)
+            slide.set_depth((count + 1) * TalkLayout.STEP)
 
             slide.show()
 
@@ -109,7 +119,7 @@ class TalkLayout (clutter.Group):
         if next < 0 or next > len(self.collection):
             return False
 
-        depth = next * -200
+        depth = next * TalkLayout.STEP
 
         try:
             next_slide = self.collection[next]
