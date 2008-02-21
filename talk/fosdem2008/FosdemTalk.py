@@ -132,6 +132,22 @@ class FosdemTalk:
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'features/6')
 
+        slide = TextSlide(font='Sans 52px', text='Accelerate your UI')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'gtk-integration/1')
+
+        slide = TextSlide(font='Sans 52px', text='Without GtkGLExt')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'gtk-integration/2')
+
+        slide = TextSlide(font='Sans 52px', text='Embed Clutter in GTK+')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'gtk-integration/3')
+
+        slide = TextSlide(font='Sans 64px', text='Embed GTK+ in Clutter?')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'gtk-integration/4')
+
         slide = TextSlide(font='Sans 56px', text='Clean and Nice API')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'in short/1')
@@ -243,6 +259,10 @@ class FosdemTalk:
         slide = TextSlide(font='Sans 64px', text='Download it <b>NOW</b>\nIt\'s an order')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'clutter-0-6/2')
+
+        slide = TextSlide(font='Sans 64px', text='Demos!')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'demos')
 
         slide = TextSlide(font='Sans 48px', text='Questions?')
         self._collection.append_slide(slide)
