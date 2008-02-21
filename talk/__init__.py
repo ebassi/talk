@@ -11,7 +11,7 @@ if _check(name):
     is_uninstalled = True
 
 if is_uninstalled:
-    print 'uninstalled, adding %s to sys.path' % abspath(join(dirname(__file__), '..', 'data'))
+#    print 'uninstalled, adding %s to sys.path' % abspath(join(dirname(__file__), '..', 'data'))
     SHARED_DATA_DIR = abspath(join(dirname(__file__), '..', 'data'))
 else:
     SHARED_DATA_DIR = join(DATA_DIR, 'talk-clutter')
