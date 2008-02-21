@@ -140,7 +140,7 @@ class FosdemTalk:
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'gtk-integration/2')
 
-        slide = TextSlide(font='Sans 52px', text='Embed Clutter in GTK+')
+        slide = TextSlide(font='Sans 64px', text='Embed Clutter in GTK+')
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'gtk-integration/3')
 
@@ -274,6 +274,48 @@ class FosdemTalk:
                           footer=FosdemTalk.FOOTER)
         self._collection.append_slide(slide)
         self._model.set(self._model.append(), 0, 'the end')
+
+        slide_script = '''
+{
+  "type" : "TextSlide",
+  "id" : "oh-slide",
+  "text" : "",
+
+  "children" : [
+    {
+      "type" : "ClutterTexture",
+      "id" : "oh-texture",
+      "pixbuf" : "data/redhand.png",
+      "x" : 300,
+      "y" : 100,
+      "visible" : true
+    },
+    {
+      "type" : "TidyTextureReflection",
+      "id" : "oh-reflect",
+      "parent-texture" : "oh-texture",
+      "x" : 300,
+      "y" : 313,
+      "opacity" : 128,
+      "visible" : true
+    },
+    {
+      "type" : "ClutterLabel",
+      "id" : "label",
+      "font-name" : "Sans 24px",
+      "text" : "http://www.clutter-project.org\nhttp://o-hand.com",
+      "color" : "#ffffff88",
+      "x" : "50%",
+      "y" : 450,
+      "visible" : true
+    }
+  ]
+}
+'''
+        self._script.load_from_data(slide_script, -1)
+        slide = self._script.get_object('oh-slide')
+        self._collection.append_slide(slide)
+        self._model.set(self._model.append(), 0, 'oh')
 
     def get_collection (self):
         return self._collection
