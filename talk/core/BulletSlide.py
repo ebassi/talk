@@ -29,6 +29,7 @@ class BulletSlide (TalkSlide):
         self.title = title
         if self.title:
             self._title_label = clutter.Label()
+            label.set_color(clutter.Color(255, 255, 255, 255))
             self._title_label.set_font_name('Sans 36px')
             self._title_label.set_use_markup(True)
             self._title_label.set_text(self.title)
@@ -44,7 +45,10 @@ class BulletSlide (TalkSlide):
         if bullets and len(bullets) > 0:
             self.bullets = bullets
 
-        count = 1
+        group = clutter.Group()
+
+        x_offset = 50
+        y_offset = 0
         for bullet in self.bullets:
             text = u'\u2023 ' + bullet
 
@@ -53,16 +57,18 @@ class BulletSlide (TalkSlide):
             label.set_font_name('Sans 28px')
             label.set_use_markup(True)
             label.set_text(text)
-            label.set_width(TalkSlide.WIDTH)
-            self.add(label)
+            label.set_width(TalkSlide.WIDTH - x_offset)
+            group.add(label)
 
-            x = 50
-            y = self.get_header_width() + (count * 50) + 100
+            x = x_offset
+            y = y_offset
 
             label.set_position(x, y)
             label.show()
 
-            #print "bullet[%d] = '%s' (%d, %d)" % (count, text, x, y)
+            y_offset = y_offset + label.get_height() + 10
 
-            count = count + 1
+        self.add(group)
+        group.set_position(0, (TalkSlide.HEIGHT - group.get_height()) / 2)
+        group.show()
 
