@@ -7,7 +7,7 @@ from talk.core.TalkSlide import TalkSlide
 class TitleSlide (TalkSlide):
     __gtype_name__ = 'TitleSlide'
 
-    def __init__ (self, title=None, subtitle=None, **kwargs):
+    def __init__ (self, title=None, subtitle=None, author=None, **kwargs):
         header = None
         if kwargs.has_key('header'):
             header = kwargs['header']
@@ -32,8 +32,11 @@ class TitleSlide (TalkSlide):
         if not subtitle:
             subtitle = 'Insert witty subtitle here'
 
+        if not author:
+            author = 'Insert your name here'
+
         self._title_label = clutter.Label()
-        self._title_label.set_font_name('Sans 52px')
+        self._title_label.set_font_name('Sans 64px')
         self._title_label.set_color(clutter.Color(255, 255, 255, 255))
         self._title_label.set_text(title)
         self.add(self._title_label)
@@ -54,4 +57,18 @@ class TitleSlide (TalkSlide):
                                           + self._title_label.get_height()
                                           + 10)
         self._subtitle_label.show()
+
+        self._author_label = clutter.Label()
+        self._author_label.set_font_name('Sans 24px')
+        self._author_label.set_color(clutter.Color(255, 255, 255, 255))
+        self._author_label.set_text(author)
+        self.add(self._author_label)
+        self._author_label.set_anchor_point(self._author_label.get_width() / 2,
+                                            self._author_label.get_height() / 2)
+        self._author_label.set_position(self.get_width() / 2,
+                                        self.get_height() / 2 
+                                        + self._title_label.get_height()
+                                        + self._subtitle_label.get_height()
+                                        + 10)
+        self._author_label.show()
 
