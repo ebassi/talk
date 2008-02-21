@@ -27,8 +27,9 @@ class MainWindow (gtk.Window):
     def __init__ (self):
         gtk.Window.__init__ (self)
         self.set_title('Talk')
-        self.set_default_size(1024, 600)
         self.set_position(gtk.WIN_POS_CENTER)
+        self.set_default_size(1024, 600)
+
         self.tree = gtk.glade.XML(join(talk.SHARED_DATA_DIR, 'talk.glade'), root='main_vbox')
         signals = {}
         for attr in dir(self):
@@ -42,11 +43,15 @@ class MainWindow (gtk.Window):
         view_box.pack_end(self._embed, False, False, 0)
         self._embed.show()
 
-        main_vbox = self.tree.get_widget('main_vbox')
-        self.add(main_vbox)
+        self._main_vbox = self.tree.get_widget('main_vbox')
+        self.add(self._main_vbox)
         self.show_all()
 
+        self._menu_bar = self.tree.get_widget('menu_bar')
+        self._slides_scroll = self.tree.get_widget('slides_scroll')
+        self._status_bar = self.tree.get_widget('status_bar')
         self._tree_view = self.tree.get_widget('slides_view')
+        self._fullscreen_menu_item = self.tree.get_widget('fullscreen_menu_item')
 
         column = gtk.TreeViewColumn('Slides', gtk.CellRendererText(), text=0)
         self._tree_view.append_column(column)
@@ -57,11 +62,30 @@ class MainWindow (gtk.Window):
     def on_quit_menu_item_activate (self, item):
         gtk.main_quit()
 
-    def on_fullscreen_menu_item_activate (self, item):
-        pass
+    def on_fullscreen_menu_item_toggled (self, item):
+        active = item.get_active()
+
+        if active:
+            self._menu_bar.hide()
+            self._slides_scroll.hide()
+            self._status_bar.hide()
+            self.fullscreen()
+        else:
+            self.unfullscreen()
+            self._main_vbox.show_all()
 
     def on_about_menu_item_activate (self, item):
         pass
+
+    def on_layout_key_press (self, layout, event):
+        if event.keyval == clutter.keysyms.f:
+            self._fullscreen_menu_item.toggled()
+            return True
+        elif event.keyval == clutter.keysyms.q:
+            gtk.main_quit()
+            return True
+
+        return False
 
     def on_slide_next (self, layout):
         selection = self._tree_view.get_selection()
@@ -74,6 +98,7 @@ class MainWindow (gtk.Window):
                 return
 
         selection.select_iter(iter)
+        self._tree_view.scroll_to_cell(model.get_path(iter), None, False,0.0, 0.0)
 
     def on_slide_prev (self, layout):
         selection = self._tree_view.get_selection()
@@ -93,6 +118,7 @@ class MainWindow (gtk.Window):
                 return
 
         selection.select_iter(iter)
+        self._tree_view.scroll_to_cell(model.get_path(iter), None, False,0.0, 0.0)
 
     def build_talk (self):
         stage = self._embed.get_stage()
@@ -107,6 +133,7 @@ class MainWindow (gtk.Window):
         layout = TalkLayout(collection, bg)
         layout.connect('slide-next', self.on_slide_next)
         layout.connect('slide-prev', self.on_slide_prev)
+        layout.connect('key-press-event', self.on_layout_key_press)
         self._tree_view.set_model(model)
 
         stage.add(layout)
