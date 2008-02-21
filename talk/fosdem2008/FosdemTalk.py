@@ -2,6 +2,7 @@ import sys
 
 import gobject
 import clutter
+import clutter.tidy
 import gtk
 
 from talk.core.SlideCollection import SlideCollection
@@ -25,6 +26,7 @@ class FosdemTalk:
 
         slide = TitleSlide(title=FosdemTalk.TITLE,
                            subtitle=FosdemTalk.SUBTITLE,
+                           author='Emmanuele Bassi <ebassi@openedhand.com>',
                            footer=FosdemTalk.FOOTER)
         self._collection.set_title_slide(slide)
         self._model.set(self._model.append(), 0, 'Title')
@@ -60,12 +62,21 @@ class FosdemTalk:
   "children" : [
     {
       "type" : "ClutterTexture",
-      "id" : "orly",
+      "id" : "orly-texture",
       "pixbuf" : "data/orly.png",
       "x" : 230,
       "y" : 100,
       "visible" : true
     },
+    {
+      "type" : "TidyTextureReflection",
+      "id" : "orly-reflect",
+      "parent-texture" : "orly-texture",
+      "x" : 230,
+      "y" : 440,
+      "opacity" : 128,
+      "visible" : true
+    }
   ]
 }
 '''
@@ -169,12 +180,21 @@ class FosdemTalk:
   "children" : [
     {
       "type" : "ClutterTexture",
-      "id" : "orly",
+      "id" : "pony-texture",
       "pixbuf" : "data/pony.jpg",
       "x" : 145,
       "y" : 100,
       "visible" : true
     },
+    {
+      "type" : "TidyTextureReflection",
+      "id" : "pony-reflect",
+      "parent-texture" : "pony-texture",
+      "x" : 145,
+      "y" : 435,
+      "opacity" : 128,
+      "visible" : true
+    }
   ]
 }
 '''
