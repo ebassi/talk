@@ -38,8 +38,9 @@ class FosdemTalk:
         items = [ \
           'Emmanuele Bassi', \
           'OpenedHand employee', \
-          'Clutter API Grue', \
+          'Clutter API Grue since 2006', \
           'Bindings author/maintainer', \
+          'GTK+ developer', \
         ]
         slide = BulletSlide(bullets=items)
         self._collection.append_slide(slide)
