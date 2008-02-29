@@ -16,9 +16,9 @@ class TalkLayout (clutter.Group):
       'slide-prev' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
     }
 
-    INV_SCALE = 45
+    INV_SCALE = 45.0
     SCALE = 1.0 / INV_SCALE
-    STEP = -300
+    STEP = -200
 
     def scale_to_depth (self, scale):
         """
@@ -65,7 +65,7 @@ class TalkLayout (clutter.Group):
               * TalkSlide.HEIGHT \
               / 2 \
               + (TalkSlide.HEIGHT / 2)
-            self._texture.set_position(-x, -y)
+            self._texture.set_position(-1 * int(x), -1 * int(y))
             self._texture.set_depth(self.scale_to_depth (TalkLayout.SCALE))
             self._texture.show()
         else:

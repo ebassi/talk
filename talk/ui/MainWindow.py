@@ -36,16 +36,9 @@ class MainWindow (gtk.Window):
             signals[attr] = getattr(self, attr)
         self.tree.signal_autoconnect(signals)
 
-        view_box = self.tree.get_widget('view_box')
-        self._embed = clutter.cluttergtk.Embed()
-        self._embed.set_flags(gtk.CAN_FOCUS)
-        self._embed.set_size_request(TalkSlide.WIDTH, TalkSlide.HEIGHT)
-        view_box.pack_end(self._embed, False, False, 0)
-        self._embed.show()
-
         self._main_vbox = self.tree.get_widget('main_vbox')
         self.add(self._main_vbox)
-        self.show_all()
+        self._main_vbox.show()
 
         self._menu_bar = self.tree.get_widget('menu_bar')
         self._slides_scroll = self.tree.get_widget('slides_scroll')
@@ -55,6 +48,13 @@ class MainWindow (gtk.Window):
 
         column = gtk.TreeViewColumn('Slides', gtk.CellRendererText(), text=0)
         self._tree_view.append_column(column)
+
+        view_box = self.tree.get_widget('view_box')
+        self._embed = clutter.cluttergtk.Embed()
+        self._embed.set_flags(gtk.CAN_FOCUS)
+        self._embed.set_size_request(TalkSlide.WIDTH, TalkSlide.HEIGHT)
+        view_box.pack_end(self._embed, False, False, 0)
+        self._embed.realize()
 
     def on_open_menu_item_activate (self, item):
         pass
@@ -123,6 +123,7 @@ class MainWindow (gtk.Window):
     def build_talk (self):
         stage = self._embed.get_stage()
         stage.set_color(clutter.Color(0, 0, 0, 255))
+        stage.show()
 
         current_talk = FosdemTalk()
 
@@ -141,6 +142,7 @@ class MainWindow (gtk.Window):
         layout.set_position(0, 0)
         layout.show()
 
+        self._embed.show()
         self._embed.grab_focus()
 
 if gtk.pygtk_version < (2, 8, 0):
