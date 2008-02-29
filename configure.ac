@@ -45,7 +45,7 @@ PKG_CHECK_MODULES(DESKBAR,
 	gtk+-2.0			>= 2.10
 	pygtk-2.0			>= 2.10
 	pygobject-2.0			>= 2.10
-        pyclutter-0.5                   >= 0.5.2
+        pyclutter-0.6                   >= 0.6.0
 )
 AC_SUBST(DESKBAR_CFLAGS)
 AC_SUBST(DESKBAR_LIBS)
