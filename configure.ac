@@ -41,14 +41,14 @@ AC_SUBST(LIBDIR)
 AS_AC_EXPAND(PYTHONDIR, $pythondir)
 AC_SUBST(PYTHONDIR)
 		
-PKG_CHECK_MODULES(DESKBAR,
+PKG_CHECK_MODULES(TALK,
 	gtk+-2.0			>= 2.10
 	pygtk-2.0			>= 2.10
 	pygobject-2.0			>= 2.10
         pyclutter-0.6                   >= 0.6.0
 )
-AC_SUBST(DESKBAR_CFLAGS)
-AC_SUBST(DESKBAR_LIBS)
+AC_SUBST(TALK_CFLAGS)
+AC_SUBST(TALK_LIBS)
 
 AC_MSG_CHECKING([for cluttergtk module])
 if AC_RUN_LOG([$PYTHON -c '
@@ -63,7 +63,23 @@ except:
   AC_MSG_RESULT([yes])
 else
   AC_MSG_RESULT([no])
-  AC_MSG_ERROR([cluttergtk Python module required to build deskbar])
+  AC_MSG_ERROR([cluttergtk Python module required to build talk])
+fi
+
+AC_MSG_CHECKING([for tidy module])
+if AC_RUN_LOG([$PYTHON -c '
+try:
+    from clutter import tidy
+except ImportError, e:
+    if str(e).find("tidy") >= 0:
+          raise
+except:
+    pass
+']); then
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+  AC_MSG_ERROR([tidy Python module required to build talk])
 fi
 
 dnl ****************************************************************************
