@@ -1,7 +1,8 @@
 SUBDIRS =
 	
 talk-clutter: talk-clutter.py
-	sed -e "s|\@PYTHONDIR\@|$(pythondir)/talk-clutter|" $< > $@
+	sed -e "s|\@PYTHONDIR\@|$(pythondir)/talk-clutter|" $< > $@ \
+	&& cp $< $(top_srcdir)
 
 talkbindir = $(libdir)/talk-clutter
 talkbin_SCRIPTS = talk-clutter
